@@ -13,11 +13,18 @@ def inputForm():
 
 @app.route('/primary/<int:age>')
 def primary(age):
-    return "<html><body><h2>Your kid is "+ str(age) + "years old and studying in Little Primary School</h2></body></html>"
+    if age<=5:
+        return "<html><body><h2>Your kid is "+ str(age) + "years old and so should be in or admitted to Nursery School</h2></body></html>"
+    else:
+        return "<html><body><h2>Your kid is "+ str(age) + "years old and so must be studying in Little Primary School</h2></body></html>"
 
 @app.route('/secondary/<int:age>')
 def secondary(age):
-    return "<html><body><h2>Your kid is "+ str(age) + "years old and studying in Higher Secondary School</h2></body></html>"
+    if age<18:
+        return "<html><body><h2>Your kid is "+ str(age) + "years old and so must be studying in Higher Secondary School</h2></body></html>"
+    else:
+        return "<html><body><h2>Your kid is "+ str(age) + "years old and so should have completed Higher Secondary School and either pursuing college/university studies or job!</h2></body></html>"
+
 
 @app.route('/passingscore')
 def passingScore():
@@ -44,5 +51,8 @@ def submit():
     return "You are successfully registered for the course. Hooray!"
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # modified the port from 5000 to 80 to allow execution from mac OS as there is a known bug with Docker Networks 
+    # based on the suggestion in the below link, modified this code
+    # https://docs.docker.com/docker-for-mac/networking/
+    app.run(host='0.0.0.0', port=80, debug=True)
 
